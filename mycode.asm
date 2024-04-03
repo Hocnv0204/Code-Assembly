@@ -1,0 +1,44 @@
+DATA SEGMENT
+  
+    array DW 10 DUP(?)
+DATA ENDS
+
+CODE SEGMENT
+START:
+
+    MOV AX, DATA
+    MOV DS, AX
+
+    LEA BX, array
+
+
+    MOV CX, 10
+
+CONVERT_LOOP:
+  
+    JZ END_LOOP
+
+    MOV AL, [BX]
+
+
+    CMP AL, 'a'
+    JL NEXT_CHAR
+    CMP AL, 'z'
+    JG NEXT_CHAR
+
+    SUB AL, 32
+
+    MOV [BX], AL
+
+NEXT_CHAR:
+    
+    INC BX
+    DEC CX
+    JMP CONVERT_LOOP
+
+END_LOOP:
+   
+    MOV AX, 4C00H
+    INT 21H
+CODE ENDS
+END START
